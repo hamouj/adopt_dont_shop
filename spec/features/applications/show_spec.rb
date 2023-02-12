@@ -80,6 +80,7 @@ describe 'applications show page', type: :feature do
 
    describe 'user story 8' do
     it "displays search for Pets by name whose name PARTIALLY matches my search" do
+      pet3 = @applicant_2.pets.create!(adoptable: true, age: 5, breed: 'lab', name: 'Mr Fluff', shelter_id: @shelter.id)
       visit "applications/#{@applicant_2.id}"
     
       fill_in 'search', with: 'Lob'
@@ -93,13 +94,13 @@ describe 'applications show page', type: :feature do
       click_on "Submit"
 
       expect(page).to have_content("#{@pet2.name}")
-
+      
       visit "applications/#{@applicant_2.id}"
     
-      # fill_in 'search', with: 'Mr Lobster'
-      # click_on "Submit"
-      #this test should pass is not passing or the model test
-      # expect(page).to have_content("#{@pet2.name}")
+      fill_in 'search', with: 'Fluff'
+      click_on "Submit"
+      
+      expect(page).to have_content("#{pet3.name}")
     end
    end
 
@@ -111,7 +112,6 @@ describe 'applications show page', type: :feature do
       click_on "Submit"
 
       expect(page).to have_content("#{@pet2.name}")
-
     end
   end
  end  

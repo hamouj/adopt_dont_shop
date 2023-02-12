@@ -33,7 +33,7 @@ RSpec.describe Pet, type: :model do
       it 'returns name PARTIALLY matches my search' do
         expect(Pet.search("Cl")).to eq([@pet_2, @pet_4])
         expect(Pet.search("Mr")).to eq([@pet_1, @pet_4])
-        # expect(Pet.search("Mr Lobster")).to eq([@pet_1, @pet_4, @pet_5])
+        expect(Pet.search("Cloud")).to eq([@pet_4])
       end
     end
 
