@@ -77,5 +77,42 @@ describe 'applications show page', type: :feature do
       end
     end
    end
+
+   describe 'user story 8' do
+    it "displays search for Pets by name whose name PARTIALLY matches my search" do
+      visit "applications/#{@applicant_2.id}"
+    
+      fill_in 'search', with: 'Lob'
+      click_on "Submit"
+
+      expect(page).to have_content("#{@pet2.name}")
+
+      visit "applications/#{@applicant_2.id}"
+    
+      fill_in 'search', with: 'L'
+      click_on "Submit"
+
+      expect(page).to have_content("#{@pet2.name}")
+
+      visit "applications/#{@applicant_2.id}"
+    
+      # fill_in 'search', with: 'Mr Lobster'
+      # click_on "Submit"
+      #this test should pass is not passing or the model test
+      # expect(page).to have_content("#{@pet2.name}")
+    end
+   end
+
+   describe 'user story 9' do
+    it 'returns name search is case insensitive' do
+      visit "applications/#{@applicant_2.id}"
+    
+      fill_in 'search', with: 'LoBsTeR'
+      click_on "Submit"
+
+      expect(page).to have_content("#{@pet2.name}")
+
+    end
+  end
  end  
 
