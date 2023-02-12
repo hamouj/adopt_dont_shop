@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'applications show page', type: :feature do
   before(:each) do
-    @applicant_1 = Application.create!(name: 'Jasmine', street_address: '1011 P St.', city: 'Las Vegas', state: 'Nevada', zip_code: '89178', description: "I'm lonely.", status: 'Pending')
-    @applicant_2 = Application.create!(name: 'Elle', street_address: '2023 Something St.', city: 'Denver', state: 'Colorado', zip_code: '80014', description: 'I love animals!', status: 'In Progress')
+    @applicant_1 = Application.create!(name: 'Jasmine', street_address: '1011 P St.', city: 'Las Vegas', state: 'Nevada', zip_code: '89178', description: "I'm lonely", status: 'Pending')
+    @applicant_2 = Application.create!(name: 'Elle', street_address: '2023 Something St.', city: 'Denver', state: 'Colorado', zip_code: '80014', description: nil, status: 'In Progress')
     
     @shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
 
@@ -43,7 +43,7 @@ describe 'applications show page', type: :feature do
       expect(page).to have_content("In Progress")
       expect(page).to_not have_content("#{@pet2.name}")
 
-      within "#application-add-pets" do
+      within "#pet-section" do
         expect(page).to have_content("Add a Pet to this Application")
         
         fill_in 'search', with: 'Lobster'
@@ -72,10 +72,74 @@ describe 'applications show page', type: :feature do
 
       expect(current_path).to eq("/applications/#{@applicant_2.id}")
 
-      within '#application-pets' do
+      within '#pet-section' do
         expect(page).to have_content("#{@pet2.name}")
       end
     end
-   end
- end  
+
+    it 'allows you to add multiple pets to an application' do
+      visit "applications/#{@applicant_2.id}"
+    
+      fill_in 'search', with: 'Lobster'
+      click_on "Submit"
+      
+      click_link "Adopt this Pet"
+
+      expect(page).to have_content("Add a Pet to this Application")
+
+      fill_in 'search', with: "Lucille Bald"
+      click_on "Submit"
+
+      click_link "Adopt this Pet"
+
+      within '#pet-section' do
+        expect(page).to have_content("#{@pet2.name}")
+        expect(page).to have_content("#{@pet1.name}")
+      end
+    end
+  end
+
+  describe 'user story 6' do
+    it "has a section to add a description and submit the application when a pet is added" do
+      visit "applications/#{@applicant_2.id}"
+    
+      fill_in 'search', with: 'Lobster'
+      click_on "Submit"
+      click_link "Adopt this Pet"
+
+      expect(page).to have_content("Why would you be a good owner for these pet(s)?")
+
+      fill_in 'description', with: "I am an animal lover and will treat any pet like a family member."
+      click_on "Submit Application"
+
+      expect(current_path).to eq("/applications/#{@applicant_2.id}")
+    end
+
+    it "changes the application status to 'pending' when I submit my application" do
+      visit "applications/#{@applicant_2.id}"
+    
+      fill_in 'search', with: 'Lobster'
+      click_on "Submit"
+      click_link "Adopt this Pet"
+
+      fill_in 'description', with: "I am an animal lover and will treat any pet like a family member."
+      click_on "Submit Application"
+
+      expect(page).to have_content("Pending")
+      expect(page).to have_content("Lobster")
+      expect(page).to have_content("I am an animal lover and will treat any pet like a family member.")
+      expect(page).to_not have_content("Adopt this Pet")
+    end
+  end
+
+  describe 'user story 7' do
+    it 'does not have a section to submit the application until I add a pet to the application' do
+      visit "applications/#{@applicant_2.id}"
+
+      expect(page).to_not have_content(@pet1.name)
+      expect(page).to_not have_content(@pet2.name)
+      expect(page).to_not have_content("Submit Application")
+    end
+  end
+end  
 
