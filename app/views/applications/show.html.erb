@@ -6,7 +6,11 @@
 <%= @application.description %>
 <br>
 <h3>Names of the pet(s) you want to adopt</h3>
-<% if @application.status == "In Progress" %>
+<% if @application.status == "In Progress" && @application.pets.empty? %>
+  <%= render "app_pets" %>
+  <%= render "add_pets" %>
+<% elsif @application.status == "In Progress" %>
+  <%= render "submit_app" %>
   <%= render "app_pets" %>
   <%= render "add_pets" %>
 <% else %>
