@@ -1,7 +1,5 @@
-  <div id="application-pets">
-  <% @application.pets.each do |pet| %>
-    <%= link_to pet.name, "/pets/#{pet.id}" %>
-    <br>
-    <br>
-  <% end %>
-  </div>
+<% @application.pets.each do |pet| %>
+  <%= link_to pet.name, "/pets/#{pet.id}" %>
+  <br>
+  <br>
+<% end %>

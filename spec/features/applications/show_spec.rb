@@ -43,7 +43,7 @@ describe 'applications show page', type: :feature do
       expect(page).to have_content("In Progress")
       expect(page).to_not have_content("#{@pet2.name}")
 
-      within "#application-add-pets" do
+      within "#pet-section" do
         expect(page).to have_content("Add a Pet to this Application")
         
         fill_in 'search', with: 'Lobster'
@@ -72,7 +72,7 @@ describe 'applications show page', type: :feature do
 
       expect(current_path).to eq("/applications/#{@applicant_2.id}")
 
-      within '#application-pets' do
+      within '#pet-section' do
         expect(page).to have_content("#{@pet2.name}")
       end
     end
@@ -92,7 +92,7 @@ describe 'applications show page', type: :feature do
 
       click_link "Adopt this Pet"
 
-      within '#application-pets' do
+      within '#pet-section' do
         expect(page).to have_content("#{@pet2.name}")
         expect(page).to have_content("#{@pet1.name}")
       end
@@ -129,6 +129,16 @@ describe 'applications show page', type: :feature do
       expect(page).to have_content("Lobster")
       expect(page).to have_content("I am an animal lover and will treat any pet like a family member.")
       expect(page).to_not have_content("Adopt this Pet")
+    end
+  end
+
+  describe 'user story 7' do
+    it 'does not have a section to submit the application until I add a pet to the application' do
+      visit "applications/#{@applicant_2.id}"
+
+      expect(page).to_not have_content(@pet1.name)
+      expect(page).to_not have_content(@pet2.name)
+      expect(page).to_not have_content("Submit Application")
     end
   end
 end  
