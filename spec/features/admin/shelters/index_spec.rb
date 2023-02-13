@@ -31,7 +31,7 @@ describe 'admin index page' do
       within '#pending' do
         expect(page).to have_content("Shelters with Pending Applications")
         expect(page).to have_content("Aurora shelter")
-        expect(page).to have_content("Aurora shelter")
+        expect(page).to have_content("Fancy pets of Colorado")
       end
     end
   end
