@@ -93,7 +93,7 @@ RSpec.describe 'the pets index' do
       visit "/pets"
       click_on("Start an Application")
       
-      expect(page).to have_button("Save")
+      expect(page).to have_button("Submit")
 
       fill_in "Name", with: "Avery"
       fill_in "Street address", with: "123 January"
