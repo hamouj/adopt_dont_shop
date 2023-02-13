@@ -15,6 +15,15 @@ describe 'admin index page' do
     @pet_4 = @applicant_2.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true, shelter_id: @shelter_1.id)
   end
 
+  describe 'user story 10' do
+    it 'displays all Shelters in the system listed in reverse alphabetical order by name' do
+      visit '/admin/shelters'
+
+      expect("RGV animal shelter").to appear_before("Fancy pets of Colorado")
+      expect("Fancy pets of Colorado").to appear_before("Aurora shelter")
+    end
+  end
+
   describe 'user story 11' do
     it 'has a section for shelters with pending applications and lists the names of the shelters' do
       visit '/admin/shelters'
