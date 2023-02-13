@@ -33,6 +33,6 @@ class Shelter < ApplicationRecord
   end
 
   def self.sort_alphabetically_descending
-    order(name: :desc)
+    find_by_sql("SELECT * FROM shelters ORDER BY shelters.name DESC;")
   end
 end

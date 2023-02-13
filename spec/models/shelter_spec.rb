@@ -68,7 +68,7 @@ RSpec.describe Shelter, type: :model do
       end
     end
 
-    describe '.sort_alphabetically_descending for user stroy 10' do
+    describe '.sort_alphabetically_descending for user story 10' do
       it "Returns all songs sorted by title alphabetically in reverse" do
         expect(Shelter.sort_alphabetically_descending).to eq([@shelter_2, @shelter_3, @shelter_1])
       end
