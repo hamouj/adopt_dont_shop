@@ -23,6 +23,8 @@ Shelter.destroy_all
 @pet_3 = Pet.create!(adoptable: true, age: 2, breed: 'Great Dane', name: 'Scooby', shelter_id: @shelter_3.id)    
 @pet_4 = Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'George Hairlesson', shelter_id: @shelter_4.id)
 @pet_5 = Pet.create!(adoptable: true, age: 3, breed: 'GSD', name: 'Charlie', shelter_id: @shelter_3.id)
-@pet_6 = @applicant_2.pets.create!(adoptable: false, age: 3, breed: 'Whippet', name: 'Annabelle', shelter_id: @shelter_1.id)
+@pet_6 = Pet.create!(adoptable: false, age: 3, breed: 'Whippet', name: 'Annabelle', shelter_id: @shelter_1.id)
 
+@application_pet_1 = ApplicationPet.create!(application: @applicant_2, pet: @pet_6)
+@application_pet_2 = ApplicationPet.create!(application: @applicant_2, pet: @pet_2)
 

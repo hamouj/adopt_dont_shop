@@ -1,0 +1,18 @@
+<h3>Application Id: <%= @application.id %></h3>
+Applicant Name: <%= @application.name %><br>
+Applicant Address: <%= @full_address %><br>
+Applicant Description: <%= @application.description %><br>
+Application Pets: <br>
+<% @application.pets.each do |pet| %>
+  <%= pet.name %>
+    <% if @application_pet == nil %>
+      <%= form_with url: "/admin/applications/#{@application.id}?", method: :patch, local: true do |f| %>
+        <%= f.hidden_field :pet_id, value: pet.id %>
+        <%= f.submit "Approve Pet" %>
+      <% end %>
+    <% else %>
+      <p>Pet Approved</p>  
+    <% end %>
+  <br>
+<% end %>
+
