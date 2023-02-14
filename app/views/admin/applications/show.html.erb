@@ -6,13 +6,19 @@ Application Pets: <br>
 <% @application.pets.each do |pet| %>
   <%= pet.name %>
   <% if pet.find_application_pet(@application.id).approved == nil %>
-      <%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |f| %>
-        <%= f.hidden_field :pet_id, value: pet.id %>
-        <%= f.submit "Approve Pet" %>
-      <% end %>
-   <% elsif pet.find_application_pet(@application.id).approved == true %> 
-     Pet Approved
-   <% end %> 
+    <%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |f| %>
+      <%= f.hidden_field :pet_id, value: pet.id %>
+      <%= f.submit "Approve Pet" %>
+    <% end %>
+    <%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |f| %>
+      <%= f.hidden_field :pet_id, value: pet.id %>
+      <%= f.submit "Reject Pet" %>
+    <% end %>
+  <% elsif pet.find_application_pet(@application.id).approved == true %> 
+    Pet Approved
+  <% elsif pet.find_application_pet(@application.id).approved == false %> 
+    Pet Rejected  
+  <% end %> 
   <br>
 <% end %>
 

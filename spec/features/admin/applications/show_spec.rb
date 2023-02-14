@@ -40,4 +40,31 @@ describe 'when I visit an admin application show page' do
       expect(page).to have_button("Approve Pet")
     end
   end
+
+  describe 'user story 13' do
+    it 'displays a button to reject the application for that specific pet' do
+      visit "/admin/applications/#{@applicant_1.id}"
+
+      expect(page).to have_button('Reject Pet')
+    end
+
+    it 'does not display the reject button and shows the indicator rejected' do
+      visit "/admin/applications/#{@applicant_1.id}"
+
+      click_button "Reject Pet"
+
+      expect(current_path).to eq("/admin/applications/#{@applicant_1.id}")
+      expect(page).to_not have_button("Reject Pet")
+      expect(page).to have_content("Pet Rejected")
+    end
+
+    it 'continues to display Reject Pet button when only one pet has been rejected on an application' do
+      visit "/admin/applications/#{@applicant_2.id}"
+
+      click_button "Reject Pet", match: :first
+
+      expect(page).to have_content("Pet Rejected")
+      expect(page).to have_button("Reject Pet")
+    end
+  end
 end
