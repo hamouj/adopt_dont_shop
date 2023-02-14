@@ -8,11 +8,14 @@ describe 'when I visit an admin application show page' do
 
     @applicant_1 = Application.create!(name: 'Jasmine', street_address: '1011 P St.', city: 'Las Vegas', state: 'Nevada', zip_code: '89178', description: "I'm lonely", status: 'Pending')
     @applicant_2 = Application.create!(name: 'Elle', street_address: '2023 Something St.', city: 'Denver', state: 'Colorado', zip_code: '80014', description: nil, status: 'In Progress')
+    @applicant_3 = Application.create!(name: 'Avery', street_address: '123 January', city: 'New York', state: 'New York', zip_code: '12345', description: nil, status: 'In Progress')
 
     @pet_1 = @applicant_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: false, shelter_id: @shelter_1.id)
     @pet_2 = @applicant_2.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true, shelter_id: @shelter_1.id)
     @pet_3 = @applicant_2.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true, shelter_id: @shelter_3.id)
     @pet_4 = @applicant_2.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true, shelter_id: @shelter_1.id)
+
+    @applicant_pets = ApplicationPet.create!(application: @applicant_3, pet: @pet_1)
   end
   describe 'user story 12' do
     it 'displays a button to approve the application for that specific pet' do
@@ -65,6 +68,19 @@ describe 'when I visit an admin application show page' do
 
       expect(page).to have_content("Pet Rejected")
       expect(page).to have_button("Reject Pet")
+    end
+  end
+
+  describe 'user story 14' do
+    it 'displays button to approve or reject the pet for second application' do
+      visit "/admin/applications/#{@applicant_1.id}"
+
+      click_button "Reject Pet"
+
+      visit "/admin/applications/#{@applicant_3.id}"
+      #applicant 1 and 3 have the same pet
+      expect(page).to have_button('Reject Pet')
+      expect(page).to have_button('Approve Pet')
     end
   end
 end
