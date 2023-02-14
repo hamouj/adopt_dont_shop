@@ -8,8 +8,13 @@ class Admin::ApplicationsController < Admin::BaseController
     application = Application.find(params[:id])
     pet = Pet.find(params[:pet_id])
     application_pet = pet.find_application_pet(application.id)
-    application_pet.update(approved: true)
 
+    if params[:commit] == "Approve Pet"
+      application_pet.update(approved: true)
+    elsif params[:commit] == "Reject Pet"
+      application_pet.update(approved: false)
+    end
+    
     redirect_to "/admin/applications/#{application.id}"
   end
 end
