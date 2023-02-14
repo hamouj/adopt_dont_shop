@@ -15,9 +15,9 @@ Application Pets: <br>
       <%= f.submit "Reject Pet" %>
     <% end %>
   <% elsif pet.find_application_pet(@application.id).approved == true %> 
-    Pet Approved
+    - Pet Approved
   <% elsif pet.find_application_pet(@application.id).approved == false %> 
-    Pet Rejected  
+    - Pet Rejected  
   <% end %> 
   <br>
 <% end %>
