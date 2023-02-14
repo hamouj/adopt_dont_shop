@@ -19,7 +19,13 @@ RSpec.describe Pet, type: :model do
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @pet_3 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 3, adoptable: false)
     @pet_4 = @shelter_1.pets.create(name: 'Mr Cloud', breed: 'longhair', age: 5, adoptable: false)
-    @pet_5 = @shelter_1.pets.create(name: 'Lobster', breed: 'doberman', adoptable: true, age: 3, adoptable: false)
+    @pet_5 = @shelter_1.pets.create(name: 'Lobster', breed: 'doberman', adoptable: false, age: 3)
+
+    @applicant_1 = Application.create!(name: 'Jasmine', street_address: '1011 P St.', city: 'Las Vegas', state: 'Nevada', zip_code: '89178', description: "I'm lonely", status: 'Pending')
+    @applicant_2 = Application.create!(name: 'Elle', street_address: '2023 Something St.', city: 'Denver', state: 'Colorado', zip_code: '80014', description: nil, status: 'In Progress')
+    
+    @application_pet_1 = ApplicationPet.create!(application: @applicant_1, pet: @pet_1)
+    @application_pet_2 = ApplicationPet.create!(application: @applicant_2, pet: @pet_1)
   end
 
   describe 'class methods' do
@@ -56,6 +62,12 @@ RSpec.describe Pet, type: :model do
     describe '.shelter_name' do
       it 'returns the shelter name for the given pet' do
         expect(@pet_3.shelter_name).to eq(@shelter_1.name)
+      end
+    end
+
+    describe '.find_application_pet()' do
+      it 'returns the specific application_pet instance' do
+        expect(@pet_1.find_application_pet(@applicant_1.id)).to eq(@application_pet_1)
       end
     end
   end

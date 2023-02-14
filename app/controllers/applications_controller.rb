@@ -8,10 +8,8 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:application_id])
     @full_address = "#{@application.street_address} #{@application.city}, #{@application.state} #{@application.zip_code}"
     if params[:search].present?
-    # if params[:search].any?
       @pets = Pet.search(params[:search])
     elsif params[:mypet].present?
-    # elsif params[:mypet].any?
       mypet = Pet.find(params[:mypet])
       ApplicationPet.create!(application: @application, pet: mypet)
     end
