@@ -27,4 +27,6 @@ Shelter.destroy_all
 
 @application_pet_1 = ApplicationPet.create!(application: @applicant_2, pet: @pet_6)
 @application_pet_2 = ApplicationPet.create!(application: @applicant_2, pet: @pet_2)
+@application_pet_3 = ApplicationPet.create!(application: @applicant_1, pet: @pet_2)
+@application_pet_4 = ApplicationPet.create!(application: @applicant_1, pet: @pet_3)
 
