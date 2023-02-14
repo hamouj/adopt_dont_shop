@@ -26,7 +26,7 @@ describe 'when I visit an admin application show page' do
 
       click_button "Approve Pet"
 
-      expect(current_path).to eq("/admin/applications/#{@applicant_1.id}/")
+      expect(current_path).to eq("/admin/applications/#{@applicant_1.id}")
       expect(page).to_not have_button("Approve Pet")
       expect(page).to have_content("Pet Approved")
     end
