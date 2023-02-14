@@ -1,7 +1,9 @@
 class Pet < ApplicationRecord
   validates :name, presence: true
   validates :age, presence: true, numericality: true
+
   belongs_to :shelter
+
   has_many :application_pets
   has_many :applications, through: :application_pets
 
@@ -11,5 +13,9 @@ class Pet < ApplicationRecord
 
   def self.adoptable
     where(adoptable: true)
+  end
+
+  def find_application_pet(app_id)
+    application_pets.where("application_id = ?", app_id).first
   end
 end  

@@ -21,7 +21,7 @@ describe 'when I visit an admin application show page' do
       expect(page).to have_button('Approve Pet')
     end
 
-    it 'does not display the approve button and shows the indicator approved' do
+    it 'when a pet is approved, does not display the approve button and shows the indicator approved' do
       visit "/admin/applications/#{@applicant_1.id}"
 
       click_button "Approve Pet"
@@ -29,6 +29,15 @@ describe 'when I visit an admin application show page' do
       expect(current_path).to eq("/admin/applications/#{@applicant_1.id}/")
       expect(page).to_not have_button("Approve Pet")
       expect(page).to have_content("Pet Approved")
+    end
+
+    it 'continues to display an Approve Pet button when only one pet has been approved on an application' do
+      visit "/admin/applications/#{@applicant_2.id}"
+
+      click_button "Approve Pet", match: :first
+
+      expect(page).to have_content("Pet Approved")
+      expect(page).to have_button("Approve Pet")
     end
   end
 end
