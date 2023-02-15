@@ -1,19 +1,10 @@
-<h3>Application Id: <%= @application.id %></h3>
-<b>Applicant Name:</b> <%= @application.name %><br>
-<b>Applicant Address:</b> <%= @full_address %><br>
-<b>Applicant Description:</b> <%= @application.description %><br>
+<%= render partial: "shared/app_information.html.erb"%>
 <h4>Application Pets:</h4>
 <% @application.pets.each do |pet| %>
   <%= pet.name %>
   <% if pet.find_application_pet(@application.id).approved == nil %>
-    <%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |f| %>
-      <%= f.hidden_field :pet_id, value: pet.id %>
-      <%= f.submit "Approve Pet" %>
-    <% end %>
-    <%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |f| %>
-      <%= f.hidden_field :pet_id, value: pet.id %>
-      <%= f.submit "Reject Pet" %>
-    <% end %>
+    <%= render partial: 'form', locals: {button_text: 'Approve Pet', pet_id: pet.id} %>
+    <%= render partial: 'form', locals: {button_text: 'Reject Pet', pet_id: pet.id} %>
   <% elsif pet.find_application_pet(@application.id).approved == true %> 
     - Pet Approved
   <% elsif pet.find_application_pet(@application.id).approved == false %> 
