@@ -9,7 +9,7 @@
 <% if @pets != nil %>
   <% @pets.each do |pet| %>
     <b><%= pet.name %></b>
-    <%= link_to "Adopt this Pet", "/applications/#{@application.id}?mypet=#{pet.id}" %>
+    <%= link_to "Adopt this Pet", "/applications/#{@application.id}/pets?mypet=#{pet.id}", method: :post %>
     <br>
     <%= pet.age %> years old
     <br>
