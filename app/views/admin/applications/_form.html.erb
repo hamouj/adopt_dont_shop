@@ -1,0 +1,4 @@
+<%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |f| %>
+  <%= f.hidden_field :pet_id, value: pet_id %>
+  <%= f.submit button_text %>
+<% end %>

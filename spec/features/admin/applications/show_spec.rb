@@ -95,6 +95,7 @@ describe 'when I visit an admin application show page' do
       click_button "Approve Pet"
 
       expect(page).to have_content("Application Status: Approved")
+      expect(current_path).to eq("/admin/applications/#{@applicant_1.id}")
     end
 
     it 'changes the application status to approved when all pets (multiple) are approved' do
@@ -104,6 +105,28 @@ describe 'when I visit an admin application show page' do
       click_button "Approve Pet"
 
       expect(page).to have_content("Application Status: Approved")
+      expect(current_path).to eq("/admin/applications/#{@applicant_4.id}")
+    end
+  end
+
+  describe 'user story 16' do
+    it 'changes the application status to rejected when one or more pets are rejected' do
+      visit "/admin/applications/#{@applicant_1.id}"
+
+      click_button "Reject Pet"
+
+      expect(page).to have_content("Application Status: Rejected")
+      expect(current_path).to eq("/admin/applications/#{@applicant_1.id}")
+    end
+
+    it 'changes the application status to approved when all pets (multiple) are approved' do
+      visit "/admin/applications/#{@applicant_4.id}"
+
+      click_button "Reject Pet", match: :first
+      click_button "Approve Pet"
+
+      expect(page).to have_content("Application Status: Rejected")
+      expect(current_path).to eq("/admin/applications/#{@applicant_4.id}")
     end
   end
 end

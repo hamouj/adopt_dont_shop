@@ -1,10 +1,4 @@
-<h1><%= "#{@application.name}'s Application" %></h1>
-<h3>Address:</h3>
-<%= @full_address %>
-<br>
-<h3>Why would you be a good home for this pet(s)?</h3>
-<%= @application.description %>
-<br>
+<%= render partial: "shared/app_information.html.erb"%>
 <div id="pet-section">
 <h3>Names of the pet(s) you want to adopt</h3>
 <% if @application.status == "In Progress" && @application.pets.empty? %>
