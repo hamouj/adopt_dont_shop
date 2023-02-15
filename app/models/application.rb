@@ -7,4 +7,8 @@ class Application < ApplicationRecord
   validates :city, presence: true
   validates :state, presence: true
   validates :zip_code, presence: true
+
+  def application_pet_approved
+    application_pets.pluck(:approved)
+  end
 end

@@ -1,8 +1,8 @@
 <h3>Application Id: <%= @application.id %></h3>
-Applicant Name: <%= @application.name %><br>
-Applicant Address: <%= @full_address %><br>
-Applicant Description: <%= @application.description %><br>
-Application Pets: <br>
+<b>Applicant Name:</b> <%= @application.name %><br>
+<b>Applicant Address:</b> <%= @full_address %><br>
+<b>Applicant Description:</b> <%= @application.description %><br>
+<h4>Application Pets:</h4>
 <% @application.pets.each do |pet| %>
   <%= pet.name %>
   <% if pet.find_application_pet(@application.id).approved == nil %>
@@ -21,4 +21,5 @@ Application Pets: <br>
   <% end %> 
   <br>
 <% end %>
+<h4>Application Status: <%= @application.status %></h4>
 

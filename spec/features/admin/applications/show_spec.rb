@@ -9,6 +9,7 @@ describe 'when I visit an admin application show page' do
     @applicant_1 = Application.create!(name: 'Jasmine', street_address: '1011 P St.', city: 'Las Vegas', state: 'Nevada', zip_code: '89178', description: "I'm lonely", status: 'Pending')
     @applicant_2 = Application.create!(name: 'Elle', street_address: '2023 Something St.', city: 'Denver', state: 'Colorado', zip_code: '80014', description: nil, status: 'In Progress')
     @applicant_3 = Application.create!(name: 'Avery', street_address: '123 January', city: 'New York', state: 'New York', zip_code: '12345', description: nil, status: 'In Progress')
+    @applicant_4 = Application.create!(name: 'Hailey', street_address: '456 February', city: 'Houston', state: 'Texas', zip_code: '13425', description: "I love all animals.", status: 'Pending')
 
     @pet_1 = @applicant_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: false, shelter_id: @shelter_1.id)
     @pet_2 = @applicant_2.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true, shelter_id: @shelter_1.id)
@@ -16,7 +17,10 @@ describe 'when I visit an admin application show page' do
     @pet_4 = @applicant_2.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true, shelter_id: @shelter_1.id)
 
     @applicant_pets = ApplicationPet.create!(application: @applicant_3, pet: @pet_1)
+    @applicant_pets2 = ApplicationPet.create!(application: @applicant_4, pet: @pet_2)
+    @applicant_pets3 = ApplicationPet.create!(application: @applicant_4, pet: @pet_3)
   end
+
   describe 'user story 12' do
     it 'displays a button to approve the application for that specific pet' do
       visit "/admin/applications/#{@applicant_1.id}"
@@ -81,6 +85,25 @@ describe 'when I visit an admin application show page' do
       #applicant 1 and 3 have the same pet
       expect(page).to have_button('Reject Pet')
       expect(page).to have_button('Approve Pet')
+    end
+  end
+
+  describe 'user story 15' do
+    it 'changes the application status to approved when all pets are approved' do
+      visit "/admin/applications/#{@applicant_1.id}"
+
+      click_button "Approve Pet"
+
+      expect(page).to have_content("Application Status: Approved")
+    end
+
+    it 'changes the application status to approved when all pets (multiple) are approved' do
+      visit "/admin/applications/#{@applicant_4.id}"
+
+      click_button "Approve Pet", match: :first
+      click_button "Approve Pet"
+
+      expect(page).to have_content("Application Status: Approved")
     end
   end
 end
